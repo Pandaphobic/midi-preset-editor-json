@@ -1,10 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8" />
+    <title>Your page title here :)</title>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+    />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="container">
+          <div class="6 columns" style="margin-top: 10%">
+            <h4>Basic Preset Generator</h4>
+            <p>
+              Use this tool to create preset files compatible with Open Midi Box
+              verysion 0.0.1 - For more information, stay far away from the
+              <a href="https://www.midheavy.tech">MidHeavy Website</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="container"></div>
+      <table class="w-100" id="preset-display">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Channel</th>
+            <th>Velocity</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        </tbody>
+      </table>
+      <br />
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <button
+              id="add-row"
+              name="add-row"
+              type="button"
+              class="btn btn-secondary"
+            >
+              <i class="fa fa-plus" aria-hidden="true"></i> New Row
+            </button>
+            <button
+              onclick="{
+                fileLoaded? console.log('file loaded.'): document.getElementById('file-input').click();
+                }"
+              id="load-file"
+              name="load-file"
+              type="button"
+              class="btn btn-secondary"
+            >
+              <i class="fas fa-folder-open"></i
+              ><span id="choose-file-text"> Choose File</span>
+            </button>
+            <button
+              id="save-file"
+              name="save-file"
+              type="button"
+              class="btn btn-secondary"
+            >
+              <i class="fa fa-save" aria-hidden="true"></i> Save File
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <input id="file-input" type="file" style="display: none" />
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"
+    integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ=="
+    crossorigin="anonymous"
+  ></script>
+  <script src="/mains.js"></script>
 </html>
