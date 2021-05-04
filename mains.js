@@ -14,30 +14,54 @@ saveFileBtn.addEventListener("click", () => {
   SaveAsJSONFile(Preset);
 });
 
-// // ****** EXAMPLE OBJECT ****** //
-// let Preset = {
-//   button_1: { type: "PC", value: 1, channel: 1 },
-//   button_2: { type: "PC", value: 2, channel: 1 },
-//   button_3: { type: "PC", value: 3, channel: 1 },
-//   button_4: { type: "PC", value: 4, channel: 1 },
-//   button_5: { type: "CC", value: 5, channel: 1, velocity: 0 },
-//   button_6: { type: "CC", value: 6, channel: 1, velocity: 0 },
-//   button_7: { type: "CC", value: 7, channel: 1, velocity: 0 },
-//   button_8: { type: "CC", value: 8, channel: 1, velocity: 0 },
-// };
+// ****** EXAMPLE OBJECT ****** //
+let Preset = {
+  button_1: { type: "PC", value: 1, channel: 1 },
+  button_2: { type: "PC", value: 2, channel: 1 },
+  button_3: { type: "PC", value: 3, channel: 1 },
+  button_4: { type: "PC", value: 4, channel: 1 },
+  button_5: { type: "CC", value: 5, channel: 1, velocity: 0 },
+  button_6: { type: "CC", value: 6, channel: 1, velocity: 0 },
+  button_7: { type: "CC", value: 7, channel: 1, velocity: 0 },
+  button_8: { type: "CC", value: 8, channel: 1, velocity: 0 },
+};
 
-function UpdateValue(cought_value) {
-  let index = cought_value.name;
+function UpdateValue(cought_value, cought_type) {
+  let index = parseInt(cought_value.name);
+  // index += 1;
   let valueOrigin = cought_value.id;
   let valueToUpdateUI = cought_value.value;
 
-  // if (valueOrigin.constains("ch")) {
-  // } else if (valueOrigin.constains("val")) {
-  // } else if (valueOrigin.constains("vel")) {
-  // }
-  console.log(index);
-  console.log(valueOrigin);
-  console.log(valueToUpdateUI);
+  if (cought_type == "databox") {
+    valueToUpdateUI = parseInt(valueToUpdateUI);
+
+    if (valueOrigin.includes("ch")) {
+      Preset[`button_${index}`].channel = valueToUpdateUI;
+      console.log(`channel: ${valueToUpdateUI}`);
+    }
+
+    if (valueOrigin.includes("vel")) {
+      Preset[`button_${index}`].velocity = valueToUpdateUI;
+      console.log(`velocity: ${valueToUpdateUI}`);
+    }
+
+    if (valueOrigin.includes("val")) {
+      Preset[`button_${index}`].value = valueToUpdateUI;
+      console.log(`value: ${valueToUpdateUI}`);
+    }
+  }
+
+  if (cought_type == "select") {
+    console.log(index);
+    if (document.getElementById(cought_value.id).value == 1) {
+      Preset[`button_${index}`].type = "PC";
+      console.log(Preset[`button_${index}`].type);
+    }
+    if (document.getElementById(cought_value.id).value == 2) {
+      Preset[`button_${index}`].type = "CC";
+      console.log(Preset[`button_${index}`].type);
+    }
+  }
 }
 
 // ******  FILE HANDLING  ****** //
@@ -95,6 +119,8 @@ const RowsToCreate = function (preset_object) {
 function CreateNewRow(item, index) {
   buttonIndexCount++;
   console.log(item);
+  // 0 index looks weird to users so begin with 1
+  index++;
   let PresetName = `button_${index}`;
   let PC = 0;
   let CC = 0;
@@ -122,30 +148,32 @@ function CreateNewRow(item, index) {
   <input
     class="form-control"
     type="text"
-    name="preset-name" 
+    disabled
+    name="preset-name"
+    
     id="${PresetName}"
     value="${PresetName}"
   />
 </td>
 <td>
-  <select class="custom-select">
+  <select name="${index}" id="type${index}" class="custom-select" onchange="UpdateValue(this, 'select')" >
     <option ${PC ? 'selected=""' : ""}value="1">PC</option>
     <option ${CC ? 'selected=""' : ""}value="2">CC</option>
     <option ${Custom ? 'selected=""' : ""}value="3">Cust.</option>
   </select>
 </td>
 <td>
-  <input onChange="UpdateValue(this)" class="data-box form-control" type="text" name="${index}" id="ch${index}" value="${
+  <input onChange="UpdateValue(this, 'databox')" class="data-box form-control" type="text" name="${index}" id="ch${index}" value="${
     item.channel
   }" />
 </td>
 <td>
-  <input onChange="UpdateValue(this)" class="data-box form-control" type="text" name="${index}" id="vel${index}" value="${
+  <input onChange="UpdateValue(this, 'databox')" class="data-box form-control" type="text" name="${index}" id="vel${index}" value="${
     item.velocity ? item.velocity : 0
   }" />
 </td>
 <td>
-  <input onChange="UpdateValue(this)" class="data-box form-control" type="text" name="${index}" id="val${index}" value="${
+  <input onChange="UpdateValue(this, 'databox')" class="data-box form-control" type="text" name="${index}" id="val${index}" value="${
     item.value
   }" />
 </td>
