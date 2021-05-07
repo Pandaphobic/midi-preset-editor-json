@@ -1,3 +1,7 @@
-.data-box {
-  width: 5em;
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.custom-select {
+  min-width: 4em;
 }

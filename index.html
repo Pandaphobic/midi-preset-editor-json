@@ -18,8 +18,8 @@
       integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
       crossorigin="anonymous"
     />
-    <link rel="icon" type="image/png" href="images/favicon.png" />
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
   </head>
   <body>
     <div class="container">
@@ -63,13 +63,10 @@
               <i class="fa fa-plus" aria-hidden="true"></i> New Row
             </button>
             <button
-              onclick="{
-                fileLoaded? console.log('file loaded.'): document.getElementById('file-input').click();
-                }"
               id="load-file"
               name="load-file"
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-success"
             >
               <i class="fas fa-folder-open"></i
               ><span id="choose-file-text"> Choose File</span>
@@ -88,12 +85,12 @@
     </div>
     <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <input id="file-input" type="file" style="display: none" />
+    <!-- <input id="file-input" type="file" style="display: none" /> -->
   </body>
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"
     integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ=="
     crossorigin="anonymous"
   ></script>
-  <script src="/mains.js"></script>
+  <script src="/main.js"></script>
 </html>

@@ -7,7 +7,7 @@ const newRowBtn = document.querySelector("[name=add-row]");
 const saveFileBtn = document.querySelector("[name=save-file]");
 const loadFileBtn = document.querySelector("[name=load-file]");
 
-newRowBtn.addEventListener("click", CreateNewRow);
+newRowBtn.addEventListener("click", CreateBlankRow);
 loadFileBtn.addEventListener("click", LoadFile);
 
 saveFileBtn.addEventListener("click", () => {
@@ -15,16 +15,16 @@ saveFileBtn.addEventListener("click", () => {
 });
 
 // ****** EXAMPLE OBJECT ****** //
-let Preset = {
-  button_1: { type: "PC", value: 1, channel: 1 },
-  button_2: { type: "PC", value: 2, channel: 1 },
-  button_3: { type: "PC", value: 3, channel: 1 },
-  button_4: { type: "PC", value: 4, channel: 1 },
-  button_5: { type: "CC", value: 5, channel: 1, velocity: 0 },
-  button_6: { type: "CC", value: 6, channel: 1, velocity: 0 },
-  button_7: { type: "CC", value: 7, channel: 1, velocity: 0 },
-  button_8: { type: "CC", value: 8, channel: 1, velocity: 0 },
-};
+// let Preset = {
+//   button_1: { type: "PC", value: 1, channel: 1 },
+//   button_2: { type: "PC", value: 2, channel: 1 },
+//   button_3: { type: "PC", value: 3, channel: 1 },
+//   button_4: { type: "PC", value: 4, channel: 1 },
+//   button_5: { type: "CC", value: 5, channel: 1, velocity: 0 },
+//   button_6: { type: "CC", value: 6, channel: 1, velocity: 0 },
+//   button_7: { type: "CC", value: 7, channel: 1, velocity: 0 },
+//   button_8: { type: "CC", value: 8, channel: 1, velocity: 0 },
+// };
 
 function UpdateValue(cought_value, cought_type) {
   let index = parseInt(cought_value.name);
@@ -116,7 +116,26 @@ const RowsToCreate = function (preset_object) {
 // This feels gross
 // RowsToCreate(Preset).forEach(CreateNewRow);
 
+function CreateBlankRow() {
+  let blankRow = {
+    type: "PC",
+    channel: 0,
+    velocity: 0,
+    value: 0,
+  };
+
+  CreateNewRow(blankRow, 0);
+}
+
 function CreateNewRow(item, index) {
+  if (Preset) {
+    Preset[`button_9`] = blankRow;
+  } else {
+    var Preset = {
+      button_1: { type: "PC", value: 1, channel: 1 },
+    };
+  }
+
   buttonIndexCount++;
   console.log(item);
   // 0 index looks weird to users so begin with 1
