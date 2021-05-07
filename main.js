@@ -5,6 +5,7 @@ const saveFileBtn = document.querySelector("[name=save-file]");
 const loadFileBtn = document.querySelector("[name=load-file]");
 
 class Preset {
+  // Establish default preset / template
   constructor(name) {
     this[`${name ? name : "button_1"}`] = {
       type: "PC",
@@ -13,7 +14,7 @@ class Preset {
       velocity: 0,
     };
   }
-
+  // Return number of buttons in preset
   Size() {
     var size = 0,
       key;
@@ -23,6 +24,8 @@ class Preset {
     return size;
   }
 
+  /* Creates a new row with the name +1 of the Size() 
+      of the Preset / number of buttons               */
   CreateNewRow() {
     let button_name = "";
     button_name = `button_${this.Size() + 1}`;
@@ -38,6 +41,7 @@ class Preset {
     return `${button_name} has been created`;
   }
 
+  // Able to update any value of a button (velocity, channel, type, value)
   UpdateRow(row_name, update_type, update_value) {
     if (this[`${row_name}`]) {
       this[`${row_name}`][`${update_type}`] = update_value;
@@ -46,7 +50,7 @@ class Preset {
     }
     console.log(this);
   }
-
+  // Removes a row by name
   RemoveRow(row_name) {
     if (this[`${row_name}`]) {
       delete this[`${row_name}`];
@@ -61,6 +65,15 @@ class Preset {
 var CurrentPreset = new Preset();
 UpdateTable(CurrentPreset);
 
+/* This functions parses the incoming item
+    - Figures out what value to update based on the id
+      - item.id can return -> ch1, val1, vel1, type1
+      - the type select box return a value between 1-3 corresponding to 1. PC 2. CC 3. Cust
+   
+   Then fires the UpdateRow function of the CurrentPreset
+    - Rows = Buttons 
+    - button_1 is an example of a key
+*/
 function UpdateValue(item) {
   let i = item.id;
   let val = item.value;
@@ -109,7 +122,7 @@ var fileInput = element.firstChild;
 
 fileInput.addEventListener("change", function () {
   var file = fileInput.files[0];
-
+  // Only allows .json files
   if (file.name.match(/\.(json)$/)) {
     var reader = new FileReader();
 
@@ -125,6 +138,10 @@ fileInput.addEventListener("change", function () {
   }
 });
 
+// This is what actually displays the data on screen for editing
+/* I found it easiest to image an editor as a table
+   Spreadsheets are a comfy way of thinking of these presets
+*/
 function UpdateTable(preset_object) {
   let index = 0;
   let CC = false;
@@ -134,6 +151,7 @@ function UpdateTable(preset_object) {
   // Clear Table
   tbodyRef.innerHTML = ``;
 
+  // A new row is created for every button in the preset
   for (const [key, value] of Object.entries(preset_object)) {
     index++;
     CC = false;
@@ -157,6 +175,7 @@ function UpdateTable(preset_object) {
         break;
     }
 
+    // This section dynamically generates the rows
     var newRow = document.createElement("tr");
     newRow.innerHTML += `
     <td>
@@ -193,10 +212,13 @@ function UpdateTable(preset_object) {
     }" />
     </td>`;
     console.log(newRow);
+
+    // This is the point that displays the final output
     tbodyRef.appendChild(newRow);
   }
 }
 
+// This will probably end up in the Preset Class
 function SaveCurrentPresetAsJSONFile() {
   let output = JSON.stringify(CurrentPreset);
   SaveAsFile(output, "preset.json", "text/plain;charset=utf-8");
@@ -211,6 +233,7 @@ function SaveAsFile(t, f, m) {
   }
 }
 
+// Event listeners
 loadFileBtn.addEventListener("click", () => {
   fileInput.click();
 });
